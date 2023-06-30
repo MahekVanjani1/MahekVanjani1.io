@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>GitHub Portfolio</title>
+  <style>
+    /* Add your custom styles here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+    
+    h1 {
+      font-size: 28px;
+      margin-top: 0;
+    }
+    
+    .repo-list {
+      list-style-type: none;
+      padding: 0;
+    }
+    
+    .repo-list li {
+      margin-bottom: 10px;
+    }
+    
+    .repo-name {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    
+    .repo-description {
+      margin-top: 5px;
+      color: #888;
+    }
+    
+    .repo-language {
+      margin-top: 5px;
+      color: #555;
+      font-size: 14px;
+    }
+    
+    .repo-updated {
+      margin-top: 5px;
+      color: #888;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My GitHub Portfolio</h1>
+  </header>
+  
+  <div class="container">
+    <h2>Repositories</h2>
+    <ul class="repo-list" id="repo-list">
+      <!-- Repositories will be dynamically added here -->
+    </ul>
+  </div>
+
+  <script>
+    // Fetch repositories from GitHub API
+    fetch('https://api.github.com/users/MahekVanjani1/repos')
+      .then(response => response.json())
+      .then(data => {
+        const repoList = document.getElementById('repo-list');
+        
+        data.forEach(repo => {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `
+            <div class="repo-name"><a href="${repo.html_url}">${repo.name}</a></div>
+            <div class="repo-description">${repo.description}</div>
+            <div class="repo-language">Language: ${repo.language}</div>
+            <div class="repo-updated">Last Updated: ${repo.updated_at}</div>
+          `;
+          
+          repoList.appendChild(listItem);
+        });
+      })
+      .catch(error => {
+        console.log('Error fetching repositories:', error);
+      });
+  </script>
+</body>
+</html>
+
